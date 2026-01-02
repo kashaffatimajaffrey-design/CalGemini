@@ -1,0 +1,8 @@
+{
+  "name": "CalGemini",
+  "description": "An intelligent calorie tracker powered by Gemini AI. Log food via text, photos, or voice for instant nutritional estimation and progress tracking.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

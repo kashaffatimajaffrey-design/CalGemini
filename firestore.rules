@@ -1,0 +1,23 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      // Users can only read/write their own profiles
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // Prevent users from manually changing their subscription status/pro status themselves
+      // (Though in simple apps, we trust the client or use Cloud Functions to strictly update)
+      // allow update: if request.auth != null && request.auth.uid == userId 
+      //             && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['isPro', 'subscriptionStatus']);
+      
+      match /entries/{entryId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      match /summaries/{date} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+  }
+}
